@@ -14,7 +14,7 @@ metadata:
       a specific version of an application Pod. This policy validates that the image
       specifies a tag and that it is not called `latest`.
 spec:
-  validationFailureAction: Enforce # stop resource from being created 
+  validationFailureAction: Audit # Enforce stop resource from being created 
   background: true
   rules:
   - name: require-image-tag
@@ -23,6 +23,12 @@ spec:
       - resources:
           kinds:
           - Pod
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - argocd
+          - monitoring
     validate:
       message: "An image tag is required."
       pattern:
@@ -35,6 +41,12 @@ spec:
       - resources:
           kinds:
           - Pod
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - argocd
+          - monitoring
     validate:
       message: "Using a mutable image tag e.g. 'latest' is not allowed."
       pattern:

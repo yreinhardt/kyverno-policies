@@ -25,6 +25,12 @@ spec:
       - resources:
           kinds:
           - Pod
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - argocd
+          - monitoring
     validate:
       message: "Unknown image registry."
       pattern:

@@ -18,7 +18,7 @@ metadata:
       due to Pod controllers need to specify the `namespace` field under the top-level `metadata`
       object and not at the Pod template level.
 spec:
-  validationFailureAction: Enforce
+  validationFailureAction: Audit # Enforce
   background: true
   rules:
   - name: validate-namespace
@@ -27,6 +27,12 @@ spec:
       - resources:
           kinds:
           - Pod
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - argocd
+          - monitoring
     validate:
       message: "Using 'default' namespace is not allowed."
       pattern:
@@ -41,6 +47,12 @@ spec:
           - Deployment
           - Job
           - StatefulSet
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - argocd
+          - monitoring
     validate:
       message: "Using 'default' namespace is not allowed for pod controllers."
       pattern:

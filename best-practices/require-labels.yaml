@@ -23,6 +23,12 @@ spec:
       - resources:
           kinds:
           - Pod
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - argocd
+          - monitoring
     validate:
       message: "The label `app.kubernetes.io/name` is required."
       pattern:

@@ -25,6 +25,12 @@ spec:
       - resources:
           kinds:
           - Pod
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - argocd
+          - monitoring
     validate:
       message: "CPU and memory resource requests and limits are required."
       pattern:
